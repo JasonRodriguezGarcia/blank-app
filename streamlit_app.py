@@ -15,7 +15,7 @@ st.title("Health care")
 # peso
 # distancia (calculado)
 # calorías (calculado)
-# indice 
+# indice test
 
 pages = {
     "Home": [
