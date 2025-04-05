@@ -4,7 +4,7 @@ import time
 PATH = "./pages/"
 st.title("Health care")
 
-# st.write("Instrucciones")
+# st.write("Instruccioness")
 
 # page = st.sidebar.selectbox("Choose a peich", ["Otro", "Home", "Page 1"])
 
