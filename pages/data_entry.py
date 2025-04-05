@@ -15,20 +15,26 @@ import pandas as pd
 # df = pd.DataFrame(data)
 
 if 'data' not in st.session_state:
-    st.session_state['data'] = pd.DataFrame(columns=['Date', 'SugarIndex', 'Steps', 'Intensity', 'Time', 'Weight'])
-# else:
-#     df = st.session_state['data']
+    df = pd.DataFrame(columns=['Date', 'SugarIndex', 'Steps', 'Intensity', 'Time', 'Weight'])
+else:
+    df = st.session_state['data']
 # df = st.session_state['data']
 
 # print(df)
-st.subheader("Data entry", divider=True)
+st.subheader("Data entry Amatxo", divider=True)
 
 with st.form("my_form", clear_on_submit=True):
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        dateLog = st.date_input("Date:", datetime.date(2025, 4, 1))
-        sugarIndexLog = st.number_input("Blood sugar index:", min_value=100, max_value=500, value=100)
+        dateLog = st.date_input(
+            "Date:",
+            datetime.datetime.now(),
+            # format="DD/MM/YYYY",
+            min_value=datetime.date(2020, 1, 1),
+            max_value=datetime.date(2050, 1, 1)
+        )
+        sugarIndexLog = st.number_input("Blood sugar index:", min_value=80, max_value=300, value=100)
 
     with col2:
         stepsLog = st.number_input("Steps nr.:", min_value=1, max_value=1000000, value=1)
@@ -49,8 +55,10 @@ with st.form("my_form", clear_on_submit=True):
                 'Time': timeLog,
                 'Weight': weightLog
             }
-            # df.loc[len(st.session_state['data'] )] = data_new
-            st.session_state['data'] = pd.concat([st.session_state['data'], pd.DataFrame([data_new])], ignore_index=True)
+            df.loc[len(df)] = data_new
+            print("imprimo df: ", df)
+            st.session_state['data'] = df
+            # st.session_state['data'] = pd.concat([st.session_state['data'], pd.DataFrame([data_new])], ignore_index=True)
             st.success("Dato guardado")
             time.sleep(2)
         st.write("Data saved")

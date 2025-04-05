@@ -15,15 +15,14 @@ st.title("Health care")
 # peso
 # distancia (calculado)
 # calorías (calculado)
-# indice 
+# indice test
 
 pages = {
     "Home": [
         st.Page(PATH + "home.py", title="Home"),
     ],
     "Data entry": [
-        st.Page(PATH + "data_entry.py", title="Data entry Amatxo"),
-        st.Page(PATH + "data_entry_rosa.py", title="Data entry Rosa"),
+        st.Page(PATH + "data_entry.py", title="Data entry"),
     ],
     "Statistics": [
         st.Page(PATH + "calories_consumed.py", title="Calories consumed"),
