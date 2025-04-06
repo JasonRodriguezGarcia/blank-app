@@ -19,6 +19,8 @@ fichero = "datos.csv"
 # df = pd.DataFrame(data)
 
 comidasCenas = ["Ninguna", "Arroz", "Carne", "Huevos", "Legumbre", "Otros", "Pasta", "Pescado", "Verdura"]
+campos = [ 'Fecha', 'Salsa', 'Enfriado', 'Nerviosa', 'Caminado', 'Regla', 'Migrana', 'Comido', 'BebidaComida', 'Merendado',
+            'Cenado', 'BebidaCena', 'Resultado', 'FechaAyer' ]
 
 # lógica para manejar con session_state
 # if 'dataRosa' not in st.session_state:
@@ -41,14 +43,21 @@ else:
 
     # Crear un DataFrame vacío o con datos predeterminados
     # ojo al meter datos iniciales no usamos "columns=", sino un objeto con los campos y datos por defecto
-    df = pd.DataFrame({
-        'Fecha': ["2025-1-2"], 'Salsa': ['ninguna'], 'Enfriado': ['No'], 'Caminado': ['No'], 'Regla': ['No'], "Migraña": ['No'],
-        'Comido': ['Ninguna'], 'BebidaComida': ['Agua'], 'Merendado': [''], 'Cenado': ['ninguna'], 'BebidaCena': ['No'],
-        'Resultado': ['Bien'], "FechaAyer": [2025-1-1]
-    })
+    df = pd.DataFrame(columns = (campos))
+    #     'Fecha': ["2025-1-2"], 'Salsa': ['ninguna'], 'Enfriado': ['No'], 'Caminado': ['No'], 'Regla': ['No'], "Migraña": ['No'],
+    #     'Comido': ['Ninguna'], 'BebidaComida': ['Agua'], 'Merendado': [''], 'Cenado': ['ninguna'], 'BebidaCena': ['No'],
+    #     'Resultado': ['Bien'], "FechaAyer": [2025-1-1]
+    # })
     
+    # añadiendo 1º un registro con datos iniciales
+    data_new = {
+        'Fecha': datetime.datetime(2025, 1, 2, 0, 0, 0), 'Salsa': 'Ninguna', 'Enfriado': 'No', 'Nerviosa': 'No', 'Caminado': 'No', 'Regla': 'No', "Migrana": 'No',
+        'Comido': 'Ninguna', 'BebidaComida': 'Agua', 'Merendado': '', 'Cenado': 'Ninguna', 'BebidaCena': 'Agua',
+        'Resultado': 'Bien', "FechaAyer": datetime.datetime(2025, 1, 1, 0, 0, 0)
+    }
+    df.loc[len(df)] = data_new
     # Guardar el DataFrame vacío como CSV
-    df.to_csv(fichero, index=False)
+    df.to_csv(fichero, date_format='%Y-%m-%d %H:%M:%S', index=False)
 
 with st.form("my_form", clear_on_submit=True):
     col1, col2, col3 = st.columns(3)
@@ -100,13 +109,13 @@ with st.form("my_form", clear_on_submit=True):
     if st.form_submit_button("Save"):
         with st.spinner("Saving data ...", show_time=True):
             data_new = {
-                'Fecha': dateLog,
+                'Fecha': pd.to_datetime(dateLog),
                 'Salsa': salsaLog,
                 'Enfriado': enfriadoLog,
                 'Nerviosa': nerviosaLog,
                 'Caminado': caminadoLog,
                 'Regla': reglaLog,
-                'Migraña': migranaLog, 
+                'Migrana': migranaLog, 
                 'Comido': comidoLog,
                 'BebidaComida': bebidaComidaLog,
                 'Merendado': merendadoLog,
@@ -115,17 +124,79 @@ with st.form("my_form", clear_on_submit=True):
                 'Resultado': resultadoLog,
                 'FechaAyer': dateAyerLog
             }
-            df.loc[len(df)] = data_new
+
+            print(data_new)
+            # También podrías cambiar varias columnas si lo deseas
+# df.loc[df["Name"] == "Alice", ["Name", "Age"]] = ["Alicia", 26]
+            # print("imprimo resultado del if: ", len(df.loc[df["Fecha"] == dateLog]))
+            # print("type Fecha: ", type(pd.to_datetime(df["Fecha"])))
+            # print("type dateLos: ", type(dateLog))
+
+            # fechaCondicion = pd.to_datetime(df.loc[df["Fecha"] == dateLog])
+            # dateLogCondicion = pd.to_datetime(dateLog)
+            # df["Fecha"] = pd.to_datetime(df["Fecha"])
+            # print("imprimo fechas selección: ", df.loc[0:1, ["Fecha"]])
+            # print("imprimo fecha seleccionada: ", df.loc[df["Fecha"] == dateLogCondicion])
+            # df.loc[df["Fecha"] == dateLog]
+            print("boolean: ", 2==2)
+            print("boolean fecha: ", df.loc[df["Fecha"] == dateLog])
+            print("imprimo fecha dataframe: ", pd.to_datetime(df["Fecha"]))
+            print("imprimo datelog: ", dateLog)
+            print("imprimo condicion chunga: ", df.loc[df["Fecha"] == dateLog])
+            # print("imprimo otro chungo: ", df.loc[pd.to_datetime(df["Fecha"]).dt.date == datetime.date(dateLog.year, dateLog.month, dateLog.day)])
+            editando =df.loc[pd.to_datetime(df["Fecha"]).dt.date == datetime.date(dateLog.year, dateLog.month, dateLog.day)]
+            print("cuantos registros tienes: ", len(editando))
+            print("imprimo datelog type: ", type(dateLog))
+            # print("imprimo datelog year: ", datetime.datetime.datelog.year)
+            # dateLog2 = dateLog.date()
+            if len(df.loc[pd.to_datetime(df["Fecha"]).dt.date == dateLog]) > 0:
+                print("paso por aquí")
+                # si la fecha ya existe reemplaza los datos por los nuevos
+                df.loc[df["Fecha"] == dateLog, [
+                    'Fecha',
+                    'Salsa',
+                    'Enfriado',
+                    'Nerviosa',
+                    'Caminado',
+                    'Regla',
+                    'Migrana',
+                    'Comido',
+                    'BebidaComida',
+                    'Merendado',
+                    'Cenado',
+                    'BebidaCena',
+                    'Resultado',
+                    # 'FechaAyer'
+                ]] = [
+                    dateLog,
+                    salsaLog,
+                    enfriadoLog,
+                    nerviosaLog,
+                    caminadoLog,
+                    reglaLog,
+                    migranaLog, 
+                    comidoLog,
+                    bebidaComidaLog,
+                    merendadoLog,
+                    cenadoLog,
+                    bebidaCenaLog,
+                    resultadoLog,
+                    # dateAyerLog
+                ]
+            else:
+                # si la fecha no existe, es que son datos nuevos
+                df.loc[len(df)] = data_new
             print("imprimo df: ", df)
             # Guardar el DataFrame en una ruta específica con opciones adicionales
             # df.to_csv('/ruta/a/tu/archivo.csv', sep=';', encoding='utf-8', index=False)
             # Guardar el DataFrame en una ruta específica con opciones adicionales
-            df.to_csv('datos.csv', sep=',', encoding='utf-8', index=False)
+            df.to_csv('datos.csv', encoding='utf-8', index=False)
             #antigua lógica guardando a session_state
             # st.session_state['dataRosa'] = df
-            st.success("Dato guardado")
+            st.success("Guardando datos ...")
             time.sleep(1)
         st.write("Data saved")
+    # print(df)
     st.write(df)
 
     # antigua lógica con session_state
