@@ -5,7 +5,7 @@ import pandas as pd
 # longitud paso media = 0.7
 # Distancia=Numero de pasos×Longitud del paso
 
-st.subheader("Blood sugar index", divider=True)
+st.subheader("Bebidas malestar", divider=True)
 
 st.text("UNDER CONSTRUCTION ...")
 

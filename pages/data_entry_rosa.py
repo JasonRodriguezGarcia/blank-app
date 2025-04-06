@@ -2,8 +2,12 @@ import streamlit as st
 import datetime
 import time
 import pandas as pd
+import frases_dia
+import os
 
+fichero = "datos.csv"
 
+# datos iniciales de ejemplo
 # data = {
 #     'Date': ['2025-06-01', '2025-06-02', '2025-06-05'],
 #     'SugarIndex': [120, 130, 125],
@@ -16,17 +20,35 @@ import pandas as pd
 
 comidasCenas = ["Ninguna", "Arroz", "Carne", "Huevos", "Legumbre", "Otros", "Pasta", "Pescado", "Verdura"]
 
-if 'dataRosa' not in st.session_state:
-    df = pd.DataFrame(columns=['Fecha',  'Salsa', 'Enfriado', 'Caminado', 'Regla', "Migraña",
-                                'Comido', 'BebidaComida', 'Merendado', 'Cenado', 'BebidaCena',
-                                'Resultado', "FechaAyer"])
+# lógica para manejar con session_state
+# if 'dataRosa' not in st.session_state:
+#     df = pd.DataFrame(columns=['Fecha',  'Salsa', 'Enfriado', 'Caminado', 'Regla', "Migraña",
+#                                 'Comido', 'BebidaComida', 'Merendado', 'Cenado', 'BebidaCena',
+#                                 'Resultado', "FechaAyer"])
 
-else:
-    df = st.session_state['dataRosa']
-# df = st.session_state['data']
+# else:
+#     df = st.session_state['dataRosa']
 
-# print(df)
 st.subheader("Datos Rosa", divider=True)
+st.write(frases_dia.frase())
+
+# comprobación de si el fichero de datos existe
+if os.path.exists(fichero):
+    # Leer el archivo CSV
+    df = pd.read_csv(fichero, encoding='utf-8')
+    # st.write("Datos cargados correctamente:", df)
+else:
+
+    # Crear un DataFrame vacío o con datos predeterminados
+    # ojo al meter datos iniciales no usamos "columns=", sino un objeto con los campos y datos por defecto
+    df = pd.DataFrame({
+        'Fecha': ["2025-1-2"], 'Salsa': ['ninguna'], 'Enfriado': ['No'], 'Caminado': ['No'], 'Regla': ['No'], "Migraña": ['No'],
+        'Comido': ['Ninguna'], 'BebidaComida': ['Agua'], 'Merendado': [''], 'Cenado': ['ninguna'], 'BebidaCena': ['No'],
+        'Resultado': ['Bien'], "FechaAyer": [2025-1-1]
+    })
+    
+    # Guardar el DataFrame vacío como CSV
+    df.to_csv(fichero, index=False)
 
 with st.form("my_form", clear_on_submit=True):
     col1, col2, col3 = st.columns(3)
@@ -95,15 +117,20 @@ with st.form("my_form", clear_on_submit=True):
             }
             df.loc[len(df)] = data_new
             print("imprimo df: ", df)
-            st.session_state['dataRosa'] = df
-            # st.session_state['data'] = pd.concat([st.session_state['data'], pd.DataFrame([data_new])], ignore_index=True)
+            # Guardar el DataFrame en una ruta específica con opciones adicionales
+            # df.to_csv('/ruta/a/tu/archivo.csv', sep=';', encoding='utf-8', index=False)
+            # Guardar el DataFrame en una ruta específica con opciones adicionales
+            df.to_csv('datos.csv', sep=',', encoding='utf-8', index=False)
+            #antigua lógica guardando a session_state
+            # st.session_state['dataRosa'] = df
             st.success("Dato guardado")
             time.sleep(1)
         st.write("Data saved")
+    st.write(df)
 
-if 'dataRosa' in st.session_state:
-    st.session_state['dataRosa']
-# df # printing
+    # antigua lógica con session_state
+    # if 'dataRosa' in st.session_state:
+    #     st.session_state['dataRosa']
 
 
     # st.info(f"Has pinchado {i}")

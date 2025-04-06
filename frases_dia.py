@@ -1,5 +1,6 @@
 
-fraseDiaria = [
+import random    
+frasesDiarias = [
     "La puerta de mi corazón se abre hacia dentro. Paso del rencor al Amor.",
     "Hoy escucho mis sentimientos y soy amable conmigo mismo. Sé que todos mis sentimientos son mis amigos",
     "El pasado ha terminado, ya no tiene poder en el presente. Los pensamientos de Este Momento crean mi futuro.",
@@ -52,3 +53,6 @@ fraseDiaria = [
     "Me siento seguro y realizado en todo lo que hago.",
     "Comienza hoy mismo a hablarte con amor y a vibrar en sintonía con un Universo deseoso de regalarte",
 ]
+
+def frase():
+    return frasesDiarias[random.randint(0, 50)]
