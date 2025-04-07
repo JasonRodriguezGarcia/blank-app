@@ -1,3 +1,4 @@
 Fecha,Salsa,Enfriado,Nerviosa,Caminado,Regla,Migrana,Comido,BebidaComida,Merendado,Cenado,BebidaCena,Resultado,FechaAyer
-2025-01-02 00:00:00,Ninguna,No,No,No,No,No,Ninguna,Agua,,Ninguna,Agua,Bien,2025-01-01 00:00:00
-2025-04-06 00:00:00,Ninguna,No,No,No,No,No,Ninguna,Agua,,Ninguna,Agua,Bien,2025-04-05
+2025-01-02 00:00:00,Ninguna,No,No,No,No,No,Ninguna,Agua, ,Ninguna,Agua,Bien,2025-01-01 00:00:00
+2025-04-06 00:00:00,Picante,Si,Si,No,No,No,Ninguna,Agua, ,Ninguna,Agua,Bien,2025-04-05 00:00:00
+2025-04-07 00:00:00,Ninguna,No,No,No,No,No,Arroz,Vino,bollo,Legumbre,Cerveza,Bien,2025-04-06 00:00:00

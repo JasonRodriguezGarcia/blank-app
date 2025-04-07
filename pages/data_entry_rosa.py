@@ -81,17 +81,17 @@ with st.form("my_form", clear_on_submit=True):
 
     with col2:
         salsaLog = st.selectbox("Salsa", ["Ninguna", "Alioli", "Mahonesa", "Picante"], index=0)
-        enfriadoLog = st.selectbox("Enfriado", ["Si", "No"], index=1)
-        nerviosaLog = st.selectbox("Nerviosa", ["Si", "No"], index=1)
-        caminadoLog = st.selectbox("Caminado", ["Si", "No"], index=1)
-        reglaLog = st.selectbox("Regla", ["Si", "No"], index=1)
-        migranaLog = st.selectbox("Migraña", ["Si", "No"], index=1)
+        enfriadoLog = st.selectbox("Enfriado", ["Si", "No"], index=1, placeholder="Selecciona una opción",)
+        nerviosaLog = st.selectbox("Nerviosa", ["Si", "No"], index=1, placeholder="Selecciona una opción",)
+        caminadoLog = st.selectbox("Caminado", ["Si", "No"], index=1, placeholder="Selecciona una opción",)
+        reglaLog = st.selectbox("Regla", ["Si", "No"], index=1, placeholder="Selecciona una opción",)
+        migranaLog = st.selectbox("Migraña", ["Si", "No"], index=1, placeholder="Selecciona una opción",)
     with col3:
-        comidoLog = st.selectbox("Comida", comidasCenas, index=0)
-        bebidaComidaLog = st.selectbox("Bebida comida", ["Agua", "Vino", "Cerveza", "Kalimotxo", "Agua"], index=0)
+        comidoLog = st.selectbox("Comida", comidasCenas, index=0, placeholder="Selecciona una opción",)
+        bebidaComidaLog = st.selectbox("Bebida comida", ["Agua", "Vino", "Cerveza", "Kalimotxo"], index=0, placeholder="Selecciona una opción",)
         merendadoLog = st.text_input("Merendado")
-        cenadoLog = st.selectbox("Cena", comidasCenas, index=0)
-        bebidaCenaLog = st.selectbox("Bebida cena", ["Agua", "Vino", "Cerveza", "Kalimotxo", "Agua"], index=0)
+        cenadoLog = st.selectbox("Cena", comidasCenas, index=0, placeholder="Selecciona una opción",)
+        bebidaCenaLog = st.selectbox("Bebida cena", ["Agua", "Vino", "Cerveza", "Kalimotxo"], index=0, placeholder="Selecciona una opción",)
 
     col1b, col2b, col3b = st.columns(3)
 
@@ -122,7 +122,7 @@ with st.form("my_form", clear_on_submit=True):
                 'Cenado': cenadoLog,
                 'BebidaCena': bebidaCenaLog,
                 'Resultado': resultadoLog,
-                'FechaAyer': dateAyerLog
+                'FechaAyer': pd.to_datetime(dateAyerLog)
             }
 
             print(data_new)
@@ -152,7 +152,8 @@ with st.form("my_form", clear_on_submit=True):
             if len(df.loc[pd.to_datetime(df["Fecha"]).dt.date == dateLog]) > 0:
                 print("paso por aquí")
                 # si la fecha ya existe reemplaza los datos por los nuevos
-                df.loc[df["Fecha"] == dateLog, [
+                # df.loc[df["Name"] == "Alice", ["Name"]] = "Pepe
+                df.loc[pd.to_datetime(df["Fecha"]).dt.date == dateLog, [
                     'Fecha',
                     'Salsa',
                     'Enfriado',
@@ -168,7 +169,7 @@ with st.form("my_form", clear_on_submit=True):
                     'Resultado',
                     # 'FechaAyer'
                 ]] = [
-                    dateLog,
+                    pd.to_datetime(dateLog),
                     salsaLog,
                     enfriadoLog,
                     nerviosaLog,
